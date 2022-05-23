@@ -1,0 +1,17 @@
+.CustomLink {
+    border-style:solid; 
+    border-width: 0.5px;
+    border-color: #203239;
+
+
+}
+.CustomLink .active{
+    border-radius: 1px;
+    background-color:#274550;
+}
+.CustomLink:hover{
+    background-color:#274550;
+    border-style:solid; 
+    border-width: 0.5px;
+    
+}

@@ -1,0 +1,6 @@
+.CouponList {
+    background-color: #E0DDAA;
+    display: table-column;
+    flex-direction: column;
+    justify-content:center;
+}
