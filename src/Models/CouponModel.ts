@@ -1,4 +1,4 @@
-import { Company } from "./CompanyModel";
+import { DateSchema } from "yup";
 
 export class Coupon{
     public id?:number;
@@ -13,8 +13,8 @@ export class Coupon{
     public image?:string;
     
     public constructor(id?:number,companyId?:number,category?:string,title?:string,description?:string,startDate?:Date,endDate?:Date , amount?:number,price?:number,image?:string){
-        this.id = id;
-        this.companyId = companyId;
+        this.id = id || 0;
+        this.companyId = companyId || 0;
         this.category = category;
         this.title = title;
         this.description = description;

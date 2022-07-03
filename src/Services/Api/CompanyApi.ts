@@ -2,18 +2,23 @@ import axios from "axios";
 import { Company } from "../../Models/CompanyModel";
 import { Coupon } from "../../Models/CouponModel";
 import { Customer } from "../../Models/CustomerModel";
-import globals from "../Globals";
+import { AddCouponModel } from "../../Models/AddCouponModel";
 
-export async function addCoupon(id:number,coupon: Coupon){
-    return await axios.post<Coupon>(globals.urls.company+id,coupon)
+import globals from "../Globals";
+import store from "../../Redux/store";
+import tokenAxios from "../tokenAxios";
+
+export async function addCoupon(coupon:AddCouponModel ){
+
+    return await tokenAxios.post<Coupon>(globals.urls.company+"addCoupon/"+coupon.companyId,coupon)
 };
 
-export async function updateCoupon(id:number,coupon: Coupon){
-    return await axios.put<any>(globals.urls.company+id,coupon)
+export async function updateCoupon(companyId:number,coupon: Coupon){
+    return await tokenAxios.put<Coupon>(globals.urls.company+"updateCoupon/"+companyId,coupon);
 };
 
 export async function deleteCoupon(id:number){
-    return await axios.delete<any>(globals.urls.company+id)
+    return await axios.delete<any>(globals.urls.company+"delete/"+id)
 };
 
 export async function getCompanyCoupons(id:number){

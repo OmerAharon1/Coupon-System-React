@@ -63,11 +63,11 @@ export function companiesReducer(currentState: CompaniesAppState = new Companies
             newState.companies.push(action.payload);
             break;
         case CompaniesActionType.CompanyUpdated:
-            const idx = newState.companies.findIndex(company => company.id === action.payload.id);
+            const idx = newState.companies.findIndex(company => company.companyId === action.payload.companyId);
             newState.companies[idx] = action.payload;
             break;
         case CompaniesActionType.CompanyDeleted:
-            newState.companies = newState.companies.filter(c => c.id !== action.payload);
+            newState.companies = newState.companies.filter(c => c.companyId !== action.payload);
             break;
         case CompaniesActionType.CompaniesClear:
             newState.companies = [];

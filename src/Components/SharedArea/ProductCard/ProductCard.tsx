@@ -1,36 +1,72 @@
+import { useState } from "react";
+import { FaCashRegister } from "react-icons/fa";
+import { useNavigate, useParams } from "react-router-dom";
 import { Coupon } from "../../../Models/CouponModel";
-import { Customer } from "../../../Models/CustomerModel";
-import { purchaseCoupon } from "../../../Services/Api/CustomerApi";
+import { couponDeletedAction, couponUpdatedAction } from "../../../Redux/CouponsAppState";
+import Store from "../../../Redux/store";
+import store from "../../../Redux/store";
+import { deleteCoupon } from "../../../Services/Api/CompanyApi";
+import { getOneCoupon, purchaseCoupon } from "../../../Services/Api/CustomerApi";
 import notify, { ErrMsg, SccMsg } from "../../../Services/Notifications";
 import ILDate from "../ILDate/ILDate";
 import "./ProductCard.css";
-import { FaCashRegister } from "react-icons/fa";
-import { useParams } from "react-router-dom";
 
 interface ProductCardProps {
     coupon: Coupon;
-    customer: Customer;
 }
 
 function ProductCard(props: ProductCardProps): JSX.Element {
+
     const params = useParams();
-    console.log(params);
+
+    const navigate = useNavigate();
+    const [coupon,setCoupon] = useState<Coupon>();
+
+
+
+
     const purchase = () => {
-        purchaseCoupon(props.coupon.id || 0, props.customer)
-            .then(res => {
-                notify.success(SccMsg.COUPON_PURCHASE)
-            })
-            .catch(err => notify.error(ErrMsg.ALREADY_PURCHASED));
+        if (!store.getState().authReducer.user.token) {
+            notify.error(ErrMsg.PLS_LOGIN);
+            navigate('/login')
+            
+        }else{
+            if(store.getState().authReducer.user.clientType === "CUSTOMER"){
+                purchaseCoupon(store.getState().authReducer.user.id, props.coupon)
+                    .then(res => {
+                        notify.success(SccMsg.COUPON_PURCHASE)
+                        setCoupon(res.data)
+                        store.dispatch(couponUpdatedAction(res.data))
+                        
+                    })
+                    .catch(err => {
+                        notify.error(ErrMsg.ALREADY_PURCHASED)
+                    })
+            }else {
+                notify.error(ErrMsg.NOT_AUTHORIZED)
+
+            }
+        }
     }
+    
+
+
+
     return (
-        <div className="ProductCard">
-            <p>id: {props.coupon.id} </p>
-            <img src="https://picsum.photos/id/424/200/300" alt="" />
-            <h1> {props.coupon.title} </h1>
-            <p className="price">Price: {props.coupon.price} </p>
-            <p>Description: {props.coupon.description} </p>
-            <p>Exp: <ILDate date={props.coupon.endDate || new Date()} /></p>
-            <p><button onClick={purchase}><FaCashRegister /></button></p>
+        <div className="Container">
+            <div className="ProductCard">
+                <p>id: {props.coupon.id} </p>
+                <img src="https://picsum.photos/id/424/200/300" alt="" />
+                <h1> {props.coupon.title} </h1>
+                <p className="companyId">Company Id: {props.coupon.companyId} </p>
+                <p className="amount">Amount left: {props.coupon.amount} </p>
+                <p className="price">Price: {props.coupon.price} </p>
+                <p>Description: {props.coupon.description} </p>
+                <p>Exp: <ILDate date={props.coupon.endDate || new Date()} /></p>
+                <p><button onClick={purchase}><FaCashRegister /></button></p>
+
+            </div>
+
         </div>
     );
 }

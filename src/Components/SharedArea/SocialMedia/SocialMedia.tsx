@@ -1,15 +1,19 @@
 import "./SocialMedia.css";
-import { FaFacebook , FaInstagram , FaTwitter , FaGithub ,FaYoutube } from 'react-icons/fa';
+import { FaFacebook, FaInstagram, FaTwitter, FaGithub, FaYoutube ,FaLinkedin} from 'react-icons/fa';
+import { Link } from "react-router-dom";
 
 
 function SocialMedia(): JSX.Element {
+
+
     return (
         <div className="SocialMedia">
-			<FaFacebook className="image-distance" size={33} />
-            <FaInstagram className="image-distance" size={33}/>
-            <FaTwitter className="image-distance" size={33}/>
-            <FaGithub className="image-distance" size={33}/>
-            <FaYoutube className="image-distance" size={33}/>
+            <a href="https://www.linkedin.com/in/omer-aharon-6698401b3/">            
+            <FaLinkedin className="image-distance" color="white" size={33} />
+            </a>
+            <a href="https://github.com/OmerAharon1">            
+            <FaGithub className="image-distance" color="white" size={33} />
+            </a>
         </div>
     );
 }

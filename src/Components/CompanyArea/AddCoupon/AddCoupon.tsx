@@ -1,29 +1,28 @@
-import { useEffect } from "react";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import * as yup from "yup";
+import { AddCouponModel } from "../../../Models/AddCouponModel";
 import store from "../../../Redux/store";
 import notify, { ErrMsg, SccMsg } from "../../../Services/Notifications";
 import "./AddCoupon.css";
-import { useForm } from "react-hook-form";
-import { Coupon } from "../../../Models/CouponModel";
-import { Company } from "../../../Models/CompanyModel";
-
-import { addCoupon } from "../../../Services/Api/CompanyApi";
 import { couponAddedAction } from "../../../Redux/CouponsAppState";
+import { addCoupon } from "../../../Services/Api/CompanyApi";
+import { getAllCoupons, getOneCoupon } from "../../../Services/Api/CustomerApi";
+import { Coupon } from "../../../Models/CouponModel";
 
 function AddCoupon(): JSX.Element {
     const navigate = useNavigate();
-    const companyId = store.getState().companiesAuthState.company.id;
 
 
-    // useEffect(() => {
-    //     // If we don't have a user object - we are not logged in
-    //     if (!store.getState().companiesAuthState.company.token) {
-    //         notify.error(ErrMsg.LOGIN_REQUIRED);
-    //         navigate('/login');
-    //     }
-    // },[])
+    useEffect(() => {
+        // If we don't have a user object - we are not logged in
+        if (store.getState().authReducer.user.clientType !== "COMPANY") {
+            notify.error(ErrMsg.NOT_AUTHORIZED);
+            navigate('/coupons');
+        }
+    }, [])
 
     const schema = yup.object().shape({
         category:
@@ -46,6 +45,7 @@ function AddCoupon(): JSX.Element {
                 .default(new Date())
                 .typeError("You must specify coupon end date")
                 .required("end date is required")
+                
                 .nullable().default(() => new Date()),
         amount:
             yup.number()
@@ -60,11 +60,11 @@ function AddCoupon(): JSX.Element {
     });
 
 
-    const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm<Coupon>({ mode: "all", resolver: yupResolver(schema) });
+    const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm<AddCouponModel>({ mode: "all", resolver: yupResolver(schema) });
 
-    const sendToRemote = async (coupon: Coupon) => {
-        console.log(store.getState().companiesAuthState.company.id!);
-        addCoupon(store.getState().companiesAuthState.company.id!, coupon)
+    const sendToRemote = async (couponModel: AddCouponModel) => {
+        couponModel.companyId = store.getState().authReducer.user.id;
+        addCoupon(couponModel)
             .then(res => {
                 notify.success(SccMsg.ADDED_COMPANY);
                 // Updating global state
@@ -82,62 +82,57 @@ function AddCoupon(): JSX.Element {
         <div className="AddCoupon">
             <h2>Add new coupon</h2>
             <form onSubmit={handleSubmit(sendToRemote)}>
-                
-                <label htmlFor="companyId">companyId</label>
-                <input type="number" {...register("companyId")} name="company" placeholder="company" />
-                <br />
-                <span>{errors.companyId?.message}</span>
-                <br />
 
-                <label htmlFor="category">category</label>
+
+                <label htmlFor="category">Category</label>
                 <input type="text" {...register("category")} name="category" placeholder="category" />
                 <br />
                 <span>{errors.category?.message}</span>
                 <br />
 
-                <label htmlFor="category">category</label>
+                <label htmlFor="title">Title</label>
                 <input type="text" {...register("title")} name="title" placeholder="title" />
                 <br />
                 <span>{errors.title?.message}</span>
                 <br />
 
-                <label htmlFor="description">description</label>
+                <label htmlFor="description">Description</label>
                 <input type="text" {...register("description")} name="description" placeholder="description" />
                 <br />
                 <span>{errors.description?.message}</span>
                 <br />
 
-                <label htmlFor="startDate">group</label>
+                <label htmlFor="startDate">Start Date</label>
                 <input type="datetime-local" {...register("startDate")} name="startDate" placeholder="startDate" />
                 <br />
                 <span>{errors.startDate?.message}</span>
                 <br />
 
-                <label htmlFor="endDate">when</label>
-                <input type="datetime-local" step="any" {...register("endDate")} name="endDate" placeholder="endDate" />
+                <label htmlFor="endDate">End Date</label>
+                <input type="datetime-local" step="any" {...register("endDate")} name="endDate" placeholder="endDate"  />
                 <br />
                 <span>{errors.endDate?.message}</span>
                 <br />
 
-                <label htmlFor="amount">when</label>
+                <label htmlFor="amount">Amount</label>
                 <input type="number" {...register("amount")} name="amount" placeholder="amount" />
                 <br />
                 <span>{errors.amount?.message}</span>
                 <br />
 
-                <label htmlFor="price">when</label>
+                <label htmlFor="price">Price</label>
                 <input type="number"  {...register("price")} name="price" placeholder="price" />
                 <br />
                 <span>{errors.price?.message}</span>
                 <br />
 
-                <label htmlFor="image">when</label>
+                <label htmlFor="image">Image</label>
                 <input type="text"  {...register("image")} name="image" placeholder="image" />
                 <br />
                 <span>{errors.image?.message}</span>
                 <br />
 
-                <button className="button-app" type="submit" disabled={!isValid}>Create coupon</button>
+                <button className="button-app" type="submit">Create coupon</button>
             </form>
         </div>
     );

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Customer } from "../../../Models/CustomerModel";
+import { UserModel } from "../../../Models/UserModel";
 import store from "../../../Redux/store";
 import CustomLink from "../CustomLink/CustomLink";
 import "./RegAndLogin.css";
@@ -9,21 +10,22 @@ import "./RegAndLogin.css";
 
 
 function RegAndLogin(): JSX.Element {
-    const [customer, setCustomer] = useState<Customer>(store.getState().customerAuthReduced.customer);
+    const [user, setUser] = useState<UserModel>(store.getState().authReducer.user);
 
     useEffect(() => {
 
         const unsubscribe = store.subscribe(() => {
-            setCustomer(store.getState().customerAuthReduced?.customer || new Customer());
+            setUser(store.getState().authReducer.user || new UserModel());
         });
 
         return unsubscribe;
     }, []);
+    
     return (
         <div className="RegAndLogin">
-            {customer?.token ?
+            {user?.token ?
                 <>
-                    <span>{customer?.email}</span>
+                    <span>{user?.email}</span>
                     &nbsp;
                     <CustomLink to="logout">logout</CustomLink>
                 </>

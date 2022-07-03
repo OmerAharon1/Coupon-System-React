@@ -4,6 +4,7 @@
     /* grid-template-columns: repeat(12fr,1); */
     height: 100%;
     width: 100%;
+    color : black
 }
 .App > .Header {
     grid-column: 12 span;
@@ -23,3 +24,4 @@
     grid-column: 12 span;
     
 }
+

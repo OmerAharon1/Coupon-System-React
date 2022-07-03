@@ -1,7 +1,13 @@
 .ProductCard {
+    border: 1px solid;
+    clear: both;
+    display: table;
+    padding: 1mm;
+    margin: 8px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     max-width: 300px;
-    margin: auto;
+    min-width: 300px;
+    margin: 10mm;
     text-align: center;
     font-family: arial;
     color: black;
@@ -10,6 +16,17 @@
 .price {
     color: rgb(17, 121, 58);
     font-size: 22px;
+}
+.ProductCard .CustomLink{
+    border: none;
+    outline: 0;
+    padding: 12px;
+    color: rgb(255, 255, 255);
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 92%;
+    font-size: 18px;
 }
 
 .ProductCard button {
@@ -27,3 +44,10 @@
 .ProductCard button:hover {
     opacity: 0.7;
 }
+/* 
+.Container{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+} */

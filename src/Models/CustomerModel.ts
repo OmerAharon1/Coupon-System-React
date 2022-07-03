@@ -9,7 +9,7 @@ export class Customer{
     public coupons?:Coupon[];
     public token?:string;
     public constructor(id?:number,firstName?:string,lastName?:string,password?:string,email?:string,coupons?:Coupon[],token?:string){
-        this.id=id;
+        this.id=id||0;
         this.firstName=firstName;
         this.lastName=lastName;
         this.password=password;

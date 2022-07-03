@@ -12,7 +12,7 @@ function CustomLink(props:CustomLinkProps): JSX.Element {
 
     return (
         <div className="CustomLink">
-            <Link className={match?"active":""} to={props.to}>{props.children}</Link>
+            <Link className={match?"active":""} to={props.to}> {props.children} </Link>
         </div>
     );
 }

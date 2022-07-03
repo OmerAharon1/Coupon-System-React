@@ -4,7 +4,7 @@ import { Coupon } from "../Models/CouponModel";
 
 // Step 1 - Create AppState and manage the collection once and in a centralize place
 export class CouponsAppState {
-    public coupons: Coupon[] =[];
+    public coupons: Coupon[] = [];
 }
 
 
@@ -15,7 +15,8 @@ export enum CouponsActionType {
     CouponAdded = "CouponAdded",
     CouponUpdated = "CouponUpdated",
     CouponDeleted = "CouponDeleted",
-    CouponsClear = "CouponsClear"
+    CouponsClear = "CouponsClear",
+
 }
 
 
@@ -30,7 +31,7 @@ export interface CouponAction {
 
 // Step 4 - Export Action Creators functions that gets payload and return relevant Action
 export function couponsDownloadedAction(coupons: Coupon[]): CouponAction {
-    return { type:CouponsActionType.CouponsDownloaded, payload: coupons  };
+    return { type: CouponsActionType.CouponsDownloaded, payload: coupons };
 }
 
 export function couponAddedAction(coupon: Coupon): CouponAction {
@@ -38,7 +39,7 @@ export function couponAddedAction(coupon: Coupon): CouponAction {
 }
 
 export function couponUpdatedAction(coupon: Coupon): CouponAction {
-    return { type:CouponsActionType.CouponUpdated, payload: coupon };
+    return { type: CouponsActionType.CouponUpdated, payload: coupon };
 }
 
 export function couponDeletedAction(id: number): CouponAction {
@@ -52,8 +53,9 @@ export function couponsClearAction(): CouponAction {
 
 
 
+
 // Step 5 - Reducer function perform the required action
-export function couponsReducer(currentState: CouponsAppState = new CouponsAppState(), action:CouponAction): CouponsAppState {
+export function couponsReducer(currentState: CouponsAppState = new CouponsAppState(), action: CouponAction): CouponsAppState {
     const newState = { ...currentState } //Spread Operator
     switch (action.type) {
         case CouponsActionType.CouponsDownloaded:
@@ -72,6 +74,7 @@ export function couponsReducer(currentState: CouponsAppState = new CouponsAppSta
         case CouponsActionType.CouponsClear:
             newState.coupons = [];
             break;
+
     }
     return newState;
 }

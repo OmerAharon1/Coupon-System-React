@@ -1,0 +1,12 @@
+.CompanyDetails {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+customLink{
+    flex-direction: row;
+    justify-content:center;
+}
+
+

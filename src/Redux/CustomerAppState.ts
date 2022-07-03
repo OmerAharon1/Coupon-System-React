@@ -4,7 +4,7 @@ import { Customer } from "../Models/CustomerModel";
 
 // Step 1 - Create AppState and manage the collection once and in a centralize place
 export class CustomersAppState {
-    public customers: Customer[] =[];
+    public customers: Customer[] = [];
 }
 
 
@@ -30,7 +30,7 @@ export interface CustomerAction {
 
 // Step 4 - Export Action Creators functions that gets payload and return relevant Action
 export function customersDownloadedAction(customers: Customer[]): CustomerAction {
-    return { type:CustomersActionType.CustomersDownloaded, payload: customers  };
+    return { type: CustomersActionType.CustomersDownloaded, payload: customers };
 }
 
 export function customerAddedAction(customer: Customer): CustomerAction {
@@ -38,7 +38,7 @@ export function customerAddedAction(customer: Customer): CustomerAction {
 }
 
 export function customerUpdatedAction(customer: Customer): CustomerAction {
-    return { type:CustomersActionType.CustomerUpdated, payload: customer };
+    return { type: CustomersActionType.CustomerUpdated, payload: customer };
 }
 
 export function customerDeletedAction(id: number): CustomerAction {
@@ -53,7 +53,7 @@ export function customersClearAction(): CustomerAction {
 
 
 // Step 5 - Reducer function perform the required action
-export function customersReducer(currentState: CustomersAppState = new CustomersAppState(), action:CustomerAction): CustomersAppState {
+export function customersReducer(currentState: CustomersAppState = new CustomersAppState(), action: CustomerAction): CustomersAppState {
     const newState = { ...currentState } //Spread Operator
     switch (action.type) {
         case CustomersActionType.CustomersDownloaded:
@@ -63,7 +63,7 @@ export function customersReducer(currentState: CustomersAppState = new Customers
             newState.customers.push(action.payload);
             break;
         case CustomersActionType.CustomerUpdated:
-            const idx = newState.customers.findIndex(customer => customer.id === action.payload.id);
+            const idx = newState.customers.findIndex(customers => customers.id === action.payload.id);
             newState.customers[idx] = action.payload;
             break;
         case CustomersActionType.CustomerDeleted:

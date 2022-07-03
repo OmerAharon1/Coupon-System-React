@@ -1,8 +1,4 @@
 import { Notyf } from 'notyf'
-
-
-
-
 export enum SccMsg {
     ADDED_COUPON = 'Coupon added successfully',
     DELETED_COUPON = 'Coupon deleted successfully',
@@ -13,13 +9,23 @@ export enum SccMsg {
     ADDED_COMPANY = 'Company added successfully',
     LOGOUT_SUCCESS = "Logout successfully",
     COUPON_PURCHASE = "Coupon purchased successfully",
+    DELETED_COMPANY = "Company deleted successfully",
+    REQUEST_SUCCESS = "request performed successfully",
+    GOT_COMPANIES = "Companies got successfully",
+    GOT_COMPANY = "Got company successfully",
+    GOT_CUSTOMERS = "Got customers successfully",
+    DELETE_CUSTOMER = "Customer deleted successfully",
+    GOT_CUSTOMER = "GOT_CUSTOMER",
+    UPDATE_CUSTOMER = "UPDATE_CUSTOMER"
 }
 export enum ErrMsg {
     INVALID_USERNAME_OR_PASSWORD = 'false email or password',
     MISSING_FIELDS = 'one of the required fields is missing',
     LOGIN_REQUIRED = 'login required',
-    ALREADY_PURCHASED = 'Coupon already owned by this user'
-
+    ALREADY_PURCHASED = 'Coupon already owned by this user',
+    NOT_AUTHORIZED = 'User not authorized',
+    PLS_LOGIN = "please login",
+    NOT_FOUND = "NOT_FOUND"
 }
 class Notify {
 

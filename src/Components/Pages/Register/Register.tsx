@@ -6,7 +6,7 @@ import { RegisterModel } from "../../../Models/RegisterModel";
 import { useNavigate } from "react-router-dom";
 import notify, { ErrMsg, SccMsg } from "../../../Services/Notifications";
 // import store from "../../../Redux/store";
-import { register as RegisterApi } from "../../../Services/Api/CustomerApi";
+import { register as RegisterApi } from "../../../Services/Api/UserApi";
 
 function Register(): JSX.Element {
     const navigate = useNavigate();

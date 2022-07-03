@@ -2,21 +2,17 @@ import { Coupon } from "./CouponModel";
 
 export class Company{
     public id?:number;
-    public name?:string;
-    public title?:string;
+    public name?:string ;
     public password?:string;
     public email?:string;
     public coupons?:Coupon[];
-    public token?: string;
 
-    public constructor(id?:number,name?:string,title?:string,password?:string,email?:string,coupons?:Coupon[] , token?:string){
+    public constructor(id?:number,name?:string,password?:string,email?:string,coupons?:Coupon[] ){
         this.id = id || 0 ;
-        this.name = name;
-        this.title = title;
-        this.password= password;
-        this.email = email;
+        this.name = name ||'';
+        this.password= password||'';
+        this.email = email||'';
         this.coupons = coupons || [];
-        this.token= token;
     }
 
     
