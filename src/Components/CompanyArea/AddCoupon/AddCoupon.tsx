@@ -26,9 +26,6 @@ function AddCoupon(): JSX.Element {
     // },[])
 
     const schema = yup.object().shape({
-        company:
-            yup.number()
-                .required("id is required"),
         category:
             yup.string()
                 .required("category is required"),
